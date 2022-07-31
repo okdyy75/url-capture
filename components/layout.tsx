@@ -1,4 +1,4 @@
-import Head from "next/head";
+import Head from 'next/head'
 
 const Layout = ({ children }: any) => {
     return (
@@ -6,11 +6,10 @@ const Layout = ({ children }: any) => {
             <Head>
                 <title>タイトル</title>
                 <meta name="description" content="ディスクリプション" />
-                <link rel="icon" href="/favicon.ico" />
             </Head>
             <main>{children}</main>
         </>
-    );
-};
+    )
+}
 
-export default Layout;
+export default Layout
