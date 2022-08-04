@@ -117,47 +117,46 @@ const Home: NextPage = () => {
         setCaptureList((state) => [...state, ...list])
         setCaptureSequence((state) => state + sequence)
 
-        await Promise.all(
-            list.map(async (capture: capture) => {
-                const { data, error } = await axios
-                    .get(
-                        '/api/capture?' +
-                            ('&type=' + imageType) +
-                            ('&width=' + form.width) +
-                            ('&height=' + form.height) +
-                            ('&scale=' + form.scale) +
-                            ('&url=' + encodeURIComponent(capture.url)),
-                        {
-                            responseType: 'blob',
-                        }
-                    )
-                    .then((response) => {
-                        return { ...response, error: null }
-                    })
-                    .catch((error) => {
-                        return { data: null, error }
-                    })
-                setCaptureList((state) => {
-                    return state.map((item: capture) => {
-                        if (item.id !== capture.id) {
-                            return item
-                        }
-                        return error
-                            ? {
-                                  ...item,
-                                  errorMessage:
-                                      'エラーが発生しました。ステータスコード：' +
-                                      error.response.status,
-                              }
-                            : {
-                                  ...item,
-                                  imageUrl: URL.createObjectURL(data),
-                                  imageBlob: data,
-                              }
-                    })
+        for(const index in list) {
+            const capture = list[index]
+            const { data, error } = await axios
+                .get(
+                    '/api/capture?' +
+                        ('&type=' + imageType) +
+                        ('&width=' + form.width) +
+                        ('&height=' + form.height) +
+                        ('&scale=' + form.scale) +
+                        ('&url=' + encodeURIComponent(capture.url)),
+                    {
+                        responseType: 'blob',
+                    }
+                )
+                .then((response) => {
+                    return { ...response, error: null }
+                })
+                .catch((error) => {
+                    return { data: null, error }
+                })
+            setCaptureList((state) => {
+                return state.map((item: capture) => {
+                    if (item.id !== capture.id) {
+                        return item
+                    }
+                    return error
+                        ? {
+                              ...item,
+                              errorMessage:
+                                  'エラーが発生しました。ステータスコード：' +
+                                  error.response.status,
+                          }
+                        : {
+                              ...item,
+                              imageUrl: URL.createObjectURL(data),
+                              imageBlob: data,
+                          }
                 })
             })
-        )
+        }
     }
 
     const allCheckHandleClick = (event: any) => {
