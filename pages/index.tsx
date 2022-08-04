@@ -239,14 +239,14 @@ const Home: NextPage = () => {
                     onChange={formHandleChange}
                     helperText="改行して入力できます"
                 />
-                <FormGroup row sx={{ mt: 3 }}>
+                <FormGroup row sx={{ mt: 1 }}>
                     <TextField
                         name="width"
                         label="width"
                         value={form.width}
                         onChange={formHandleChange}
                         inputProps={{ type: 'number', min: 1, max: 2000 }}
-                        sx={{ mr: 2, width: 200 }}
+                        sx={{ mt: 2, mr: 2, width: 200 }}
                     />
                     <TextField
                         name="height"
@@ -254,9 +254,9 @@ const Home: NextPage = () => {
                         value={form.height}
                         onChange={formHandleChange}
                         inputProps={{ type: 'number', min: 1, max: 4000 }}
-                        sx={{ mr: 2, width: 200 }}
+                        sx={{ mt: 2, mr: 2, width: 200 }}
                     />
-                    <FormControl sx={{ width: 140 }}>
+                    <FormControl sx={{ mt: 2, mr: 2, width: 140 }}>
                         <InputLabel>scale</InputLabel>
                         <Select
                             name="scale"
@@ -285,24 +285,25 @@ const Home: NextPage = () => {
                 sx={{ mt: 4 }}
                 subheader={
                     <>
-                        <ListSubheader sx={{ display: 'flex', alignItems: 'center' }}>
+                        <ListSubheader
+                            sx={{ display: 'flex', alignItems: 'center' }}
+                            disableGutters
+                        >
                             <ListItemIcon>
                                 <Checkbox onClick={allCheckHandleClick} />
                             </ListItemIcon>
                             <ListItemText>URL</ListItemText>
-                            <ListItemText sx={{ px: 1, flexGrow: 0, width: 70 }}>
-                                Preview
-                            </ListItemText>
-                            <ListItemText sx={{ px: 1, flexGrow: 0, width: 56 }}>DL</ListItemText>
-                            <ListItemText sx={{ flexGrow: 0, width: 56 }}></ListItemText>
+                            <ListItemText sx={{ px: 1, flexGrow: 0, width: 40 }}>PV</ListItemText>
+                            <ListItemText sx={{ px: 1, flexGrow: 0, width: 40 }}>DL</ListItemText>
+                            <ListItemText sx={{ flexGrow: 0, width: 40 }}></ListItemText>
                         </ListSubheader>
                         <Divider />
                     </>
                 }
             >
                 {captureList.map((capture: capture, index: number) => (
-                    <ListItem key={capture.id} divider={true}>
-                        <ListItemIcon>
+                    <ListItem key={capture.id} divider={true} disableGutters>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
                             <Checkbox
                                 checked={capture.checked}
                                 onChange={(event) => {
@@ -316,8 +317,9 @@ const Home: NextPage = () => {
                             secondaryTypographyProps={{
                                 color: 'error.main',
                             }}
+                            sx={{ wordBreak: 'break-all' }}
                         ></ListItemText>
-                        <ListItemIcon>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
                             <IconButton
                                 disabled={!capture.imageUrl}
                                 onClick={() => {
@@ -327,7 +329,7 @@ const Home: NextPage = () => {
                                 <ZoomInIcon />
                             </IconButton>
                         </ListItemIcon>
-                        <ListItemIcon>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
                             {capture.errorMessage ? (
                                 <ErrorIcon color="error"></ErrorIcon>
                             ) : (
@@ -345,7 +347,7 @@ const Home: NextPage = () => {
                                 </>
                             )}
                         </ListItemIcon>
-                        <ListItemIcon>
+                        <ListItemIcon sx={{ minWidth: 'auto' }}>
                             <IconButton
                                 onClick={() => {
                                     captureDelete(capture.id)

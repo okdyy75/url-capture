@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import puppetter from 'puppeteer'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { query, method } = req
@@ -45,9 +44,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // ブラウザ起動
-    const browser = await puppetter.launch({
-        args: ['--no-sandbox', '--lang=ja'],
-    })
+    let browser
+    if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+        //Vercel
+        const chrome = require('chrome-aws-lambda')
+        const puppeteer = require('puppeteer-core')
+        browser = await puppeteer.launch({
+            args: [...chrome.args, '--no-sandbox', '--lang=ja'],
+            executablePath: await chrome.executablePath,
+            headless: chrome.headless,
+        })
+    } else {
+        //Local
+        const puppeteer = require('puppeteer')
+        browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--lang=ja'],
+        })
+    }
+
     let page = await browser.newPage()
 
     // スクリーンショット取得
