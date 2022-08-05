@@ -1,6 +1,7 @@
 import '../styles/style.css'
 import type { AppProps } from 'next/app'
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material'
+import { GoogleAnalytics, usePageView } from '../lib/gtag'
 
 const theme = responsiveFontSizes(
     createTheme({
@@ -16,10 +17,14 @@ const theme = responsiveFontSizes(
 )
 
 function MyApp({ Component, pageProps }: AppProps) {
+    usePageView()
     return (
-        <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={theme}>
+                <GoogleAnalytics />
+                <Component {...pageProps} />
+            </ThemeProvider>
+        </>
     )
 }
 
