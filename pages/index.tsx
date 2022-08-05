@@ -330,7 +330,9 @@ const Home: NextPage = () => {
                         </ListItemIcon>
                         <ListItemIcon sx={{ minWidth: 'auto' }}>
                             {capture.errorMessage ? (
-                                <ErrorIcon color="error"></ErrorIcon>
+                                <IconButton disabled>
+                                    <ErrorIcon color="error" />
+                                </IconButton>
                             ) : (
                                 <>
                                     {!capture.imageUrl ? (
