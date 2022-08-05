@@ -48,12 +48,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
         //Vercel
         const chrome = require('chrome-aws-lambda')
-        const puppeteer = require('puppeteer-core')
-        browser = await puppeteer.launch({
+        browser = await chrome.puppeteer.launch({
             args: [...chrome.args, '--no-sandbox', '--lang=ja'],
             executablePath: await chrome.executablePath,
             headless: chrome.headless,
         })
+        await chrome.font("https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.ttf")
     } else {
         //Local
         const puppeteer = require('puppeteer')

@@ -18,7 +18,6 @@
     "jszip": "^3.10.1",
     "next": "12.2.3",
     "puppeteer": "~9.1.0",
-    "puppeteer-core": "~9.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
